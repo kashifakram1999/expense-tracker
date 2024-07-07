@@ -1,0 +1,61 @@
+body {
+    font-family: "Open Sans", sans-serif;
+}
+$sidebar-width: 200px;
+$gutter-width: 20px;
+.logo {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    background: #2d3f51;
+    padding: 4px 12px;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    color: #FFFFFF;
+    border-radius: 20px 0px 0px 20px;
+
+    img {
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        strong {
+            font-size: 16px;
+        }
+        span {
+            font-size: 13px;
+        }
+    }
+}
+.sidebar {
+    overflow: auto;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    background-color: #001429;
+    width: $sidebar-width;
+
+    ul li {
+        display: flex;
+        a {
+            color: #FFFFFF;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border-radius: 4px;
+        }
+        :hover {
+            background-color: red;
+            color: #FFFFFF;
+        }
+    }
+}
+.main {
+    width: calc(100% - ($sidebar-width + $gutter-width));
+    position: relative;
+    left: ($sidebar-width + $gutter-width);
+}
