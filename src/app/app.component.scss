@@ -59,3 +59,7 @@ $gutter-width: 20px;
     position: relative;
     left: ($sidebar-width + $gutter-width);
 }
+
+.selected {
+    background-color: #2d3f51;
+  }

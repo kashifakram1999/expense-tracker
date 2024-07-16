@@ -1,4 +1,3 @@
-
 <div class="sidebar">
     <div class="logo">
         <img width="40" height="40" src="https://static.vecteezy.com/system/resources/previews/001/783/581/original/round-avatar-with-young-man-free-vector.jpg" />
@@ -9,19 +8,19 @@
     </div>
     <ul>
         <li>
-            <a routerLink="/dashboard">
+            <a routerLink="/dashboard" [ngClass]="{'selected': activeLink === 'dashboard'}" (click)="setActiveLink('dashboard')">
                 <i class="bi bi-0-circle"></i>
                 <span>Dashboard</span>
             </a>
         </li>
         <li>
-            <a routerLink="/income">
+            <a routerLink="/income" [ngClass]="{'selected': activeLink === 'income'}" (click)="setActiveLink('income')">
                 <i class="bi bi-0-circle"></i>
                 <span>Income</span>
             </a>
         </li>
         <li>
-            <a routerLink="/expense">
+            <a routerLink="/expense" [ngClass]="{'selected': activeLink === 'expense'}" (click)="setActiveLink('expense')">
                 <i class="bi bi-0-circle"></i>
                 <span>Expense</span>
             </a>

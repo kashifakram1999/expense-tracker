@@ -1,4 +1,29 @@
-
+<div style="width: 33.33%; height: 7px"></div>
+<div class="card">
+    <div class="card-header text-center">
+        History
+    </div>
+    <div class="card-body">
+        <form [formGroup]="expenseForm" (ngSubmit)="submitForm()">
+            <div class="mb-2">
+                <input type="email" class="form-control" formControlName="Email" placeholder="Your email address"/>
+            </div>
+            <div class="mb-2">
+                <input type="password" class="form-control" formControlName="password" placeholder="password"/>
+            </div>
+            <div class="mb-2">
+                <input type="date" class="form-control" formControlName="date" placeholder="currentDate"/>
+            </div>
+            <div class="mb-2">
+                <textarea type="date" class="form-control" formControlName="description" placeholder="Expense description"></textarea>
+            </div>
+            <div>
+                <button class="btn-primary w-30">submitForm</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div style="width: 33.33%; height: 10px"></div>
 <div class="card">
     <div class="card-header text-center">
         Post New Expense

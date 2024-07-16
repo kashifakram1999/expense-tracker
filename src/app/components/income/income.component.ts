@@ -25,6 +25,7 @@ export class IncomeComponent {
     { item_id: 4, item_text: 'Papa ki pocket mari' },
     { item_id: 5, item_text: 'Choti sister se cheene' }
   ];
+totalIncome: any;
 
   constructor(
     private fb: FormBuilder,
