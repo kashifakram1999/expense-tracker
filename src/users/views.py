@@ -1,5 +1,5 @@
 from django.contrib.auth import login, logout
-from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.views import PasswordResetView,LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from .forms import SignUpForm, ProfileForm
@@ -21,9 +21,11 @@ def signup_view(request):
     return render(request, 'users/signup.html', {'form': form})
 
 def login_view(request):
-    # Using Django's built-in login view
-    from django.contrib.auth.views import LoginView
-    return LoginView.as_view(template_name='users/login.html')(request)
+    return LoginView.as_view(
+        template_name='users/login.html',
+        redirect_authenticated_user=True,
+        success_url=reverse_lazy('expenses:list')
+    )(request)
 
 def logout_view(request):
     logout(request)
