@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="mb-4">Delete Expense</h2>
+        <p>Are you sure you want to delete this expense?</p>
+        <p><strong>{{ object.amount }} {{ object.currency }} - {{ object.category }}</strong></p>
+        <p>{{ object.date }} - {{ object.description|truncatechars:50 }}</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'expenses:list' %}" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
