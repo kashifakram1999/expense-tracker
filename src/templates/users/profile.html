@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h2 class="mb-4">Profile Settings</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.monthly_budget.label_tag }}
+                {{ form.monthly_budget }}
+                {% if form.monthly_budget.errors %}
+                    <div class="text-danger">{{ form.monthly_budget.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                {{ form.default_category.label_tag }}
+                {{ form.default_category }}
+                <small class="form-text text-muted">
+                    Select your most frequently used category
+                </small>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
