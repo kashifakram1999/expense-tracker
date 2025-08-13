@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'django_celery_results',
     'users',
     'expenses',
 ]
@@ -134,7 +135,13 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
+# Celery settings
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC +5'
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
 
 # Email configuration
@@ -146,7 +153,23 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
 
+# Authentication settings
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/expenses/'
 LOGOUT_REDIRECT_URL = '/login/'
+
+# Logging configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+}

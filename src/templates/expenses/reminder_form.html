@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="mb-4">
+            {% if object %}Edit Reminder{% else %}Create New Reminder{% endif %}
+        </h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_title" class="form-label">Title</label>
+                <input type="text" name="title" class="form-control" id="id_title" 
+                       value="{{ form.title.value|default:'' }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_due_date" class="form-label">Due Date</label>
+                <input type="date" name="due_date" class="form-control" id="id_due_date" 
+                       value="{{ form.due_date.value|date:'Y-m-d' }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_message" class="form-label">Message</label>
+                <textarea name="message" class="form-control" id="id_message" 
+                          rows="3">{{ form.message.value|default:'' }}</textarea>
+            </div>
+            {% if object %}
+            <div class="mb-3 form-check">
+                <input type="checkbox" name="email_sent" class="form-check-input" id="id_email_sent"
+                       {% if form.email_sent.value %}checked{% endif %}>
+                <label class="form-check-label" for="id_email_sent">Email Sent</label>
+            </div>
+            {% endif %}
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{% url 'expenses:reminder_list' %}" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

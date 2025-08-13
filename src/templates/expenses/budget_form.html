@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        {% if object %}
+                            <i class="bi bi-pencil-square"></i> Edit Budget
+                        {% else %}
+                            <i class="bi bi-plus-circle"></i> Create New Budget
+                        {% endif %}
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="id_category" class="form-label">Category</label>
+                            <select name="category" id="id_category" class="form-select">
+                                <option value="">Overall Budget</option>
+                                {% for category in categories %}
+                                    <option value="{{ category.id }}"
+                                        {% if form.category.value == category.id %}selected{% endif %}>
+                                        {{ category.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <div class="form-text">
+                                Select a category for category-specific budget, or leave blank for overall budget
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_amount" class="form-label">Amount</label>
+                            <div class="input-group">
+                                <span class="input-group-text">{{ user.currency }}</span>
+                                <input type="number" name="amount" id="id_amount" 
+                                       class="form-control" step="0.01" min="0.01"
+                                       value="{{ form.amount.value|default:'' }}" required>
+                            </div>
+                            {% if form.amount.errors %}
+                                <div class="text-danger">{{ form.amount.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_period" class="form-label">Budget Period</label>
+                            <select name="period" id="id_period" class="form-select">
+                                {% for value, display in form.fields.period.choices %}
+                                    <option value="{{ value }}"
+                                        {% if form.period.value == value %}selected{% endif %}>
+                                        {{ display }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="id_start_date" class="form-label">Start Date</label>
+                                <input type="date" name="start_date" id="id_start_date" 
+                                       class="form-control" value="{{ form.start_date.value|date:'Y-m-d' }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="id_end_date" class="form-label">End Date (Optional)</label>
+                                <input type="date" name="end_date" id="id_end_date" 
+                                       class="form-control" value="{{ form.end_date.value|date:'Y-m-d' }}">
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'expenses:budget_list' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Save Budget
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

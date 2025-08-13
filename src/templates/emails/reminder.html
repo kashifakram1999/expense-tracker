@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reminder: {{ reminder.title }}</title>
+</head>
+<body>
+    <h2>Reminder: {{ reminder.title }}</h2>
+    <p>Hello {{ reminder.user.username }},</p>
+    
+    <p>This is a reminder for:</p>
+    <blockquote>
+        <p><strong>{{ reminder.title }}</strong></p>
+        <p>Due Date: {{ reminder.due_date|date:"F j, Y" }}</p>
+        {% if reminder.message %}<p>{{ reminder.message }}</p>{% endif %}
+    </blockquote>
+    
+    <p>You can view your reminders in the <a href="{{ site_url }}">Expense Tracker</a>.</p>
+    
+    <footer>
+        <p>Best regards,<br>The {{ site_name }} Team</p>
+    </footer>
+</body>
+</html>

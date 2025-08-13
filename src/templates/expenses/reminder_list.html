@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Your Reminders</h2>
+    <a href="{% url 'expenses:reminder_create' %}" class="btn btn-success">
+        Add Reminder
+    </a>
+</div>
+
+{% if reminders %}
+<div class="list-group">
+    {% for reminder in reminders %}
+    <div class="list-group-item">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h5>{{ reminder.title }}</h5>
+                <p class="mb-1">{{ reminder.message }}</p>
+                <small class="text-muted">Due: {{ reminder.due_date }}</small>
+            </div>
+            <div class="d-flex gap-1 align-items-start">
+                {% if reminder.email_sent %}
+                <span class="badge bg-success">Sent</span>
+                {% else %}
+                <span class="badge bg-warning">Pending</span>
+                {% endif %}
+                <a href="{% url 'expenses:reminder_edit' reminder.pk %}" class="btn btn-sm btn-outline-primary">
+                    Edit
+                </a>
+                <a href="{% url 'expenses:reminder_delete' reminder.pk %}" class="btn btn-sm btn-outline-danger">
+                    Delete
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">
+    You have no reminders set up.
+</div>
+{% endif %}
+{% endblock %}
