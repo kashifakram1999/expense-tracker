@@ -1,5 +1,5 @@
 from django import forms
-from .models import Expense, Category
+from .models import Expense, Category, Budget
 
 class ExpenseForm(forms.ModelForm):
     class Meta:
@@ -27,3 +27,18 @@ class CategoryForm(forms.ModelForm):
         if Category.objects.filter(user=self.user, name__iexact=name).exists():
             raise forms.ValidationError("You already have a category with this name.")
         return name
+    
+
+class BudgetForm(forms.ModelForm):
+    class Meta:
+        model = Budget
+        fields = ['category', 'amount', 'period', 'start_date', 'end_date']
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }
+    
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.filter(user=user)
+        self.fields['category'].required = False

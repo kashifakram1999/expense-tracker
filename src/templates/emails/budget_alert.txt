@@ -1,0 +1,12 @@
+Hello {{ budget.user.username }},
+
+You're approaching your budget limit for {{ budget }}.
+
+Budget Amount: {{ budget.amount }}
+Amount Spent: {{ total_spent }}
+Threshold: {{ threshold }}
+
+You have {{ budget.amount|subtract:total_spent }} remaining.
+
+---
+Expense Tracker System

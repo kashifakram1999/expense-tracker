@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Expense Summary</h2>
+    
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form id="date-range-form" class="card p-3">
+                <div class="mb-3">
+                    <label for="start-date" class="form-label">Start Date</label>
+                    <input type="date" id="start-date" class="form-control" 
+                           value="{{ start_date|date:'Y-m-d' }}">
+                </div>
+                <div class="mb-3">
+                    <label for="end-date" class="form-label">End Date</label>
+                    <input type="date" id="end-date" class="form-control" 
+                           value="{{ end_date|date:'Y-m-d' }}">
+                </div>
+                <button type="submit" class="btn btn-primary">Update Chart</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="card mb-4">
+        <div class="card-header">Expenses by Category</div>
+        <div class="card-body">
+            <canvas id="categoryChart" height="300"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('categoryChart').getContext('2d');
+    let categoryChart;
+    
+    function loadChartData(start, end) {
+        const url = `{% url 'expenses:summary_json' %}?start=${start}&end=${end}`;
+        
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (categoryChart) {
+                    categoryChart.destroy();
+                }
+                
+                categoryChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                            }
+                        }
+                    }
+                });
+            });
+    }
+    
+    // Load initial data
+    const startDate = document.getElementById('start-date').value;
+    const endDate = document.getElementById('end-date').value;
+    loadChartData(startDate, endDate);
+    
+    // Handle form submission
+    document.getElementById('date-range-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const start = document.getElementById('start-date').value;
+        const end = document.getElementById('end-date').value;
+        loadChartData(start, end);
+    });
+});
+</script>
+{% endblock %}

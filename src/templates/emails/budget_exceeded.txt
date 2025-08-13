@@ -1,0 +1,11 @@
+Hello {{ budget.user.username }},
+
+You've exceeded your budget for {{ budget }}!
+
+Budget Amount: {{ budget.amount }}
+Amount Spent: {{ total_spent }}
+
+You've spent {{ total_spent|subtract:budget.amount }} over budget.
+
+---
+Expense Tracker System
