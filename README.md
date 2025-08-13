@@ -1,4 +1,3 @@
-# expense-tracker
 # Expense Tracker System
 
 ## Setup Instructions
